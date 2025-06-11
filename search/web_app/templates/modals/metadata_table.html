@@ -1,0 +1,12 @@
+<table class="table table-striped" id="fulltext_meta">
+  <tbody>
+    {% for k, v in data.meta.items() %}
+      {% if k in viewable_meta or k in sentence_meta %}
+        <tr>
+          <td>{{ _('metafield_' + k) }}</td>
+          <td>{{ v }}</td>
+        </tr>
+      {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
