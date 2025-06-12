@@ -15,3 +15,4 @@ A guide for setting up tsakorpus from scratch on the UGA corpus server is availa
 - [ ] Fix tiers to show correct information
 - [ ] Fix audio clipping issue with new .eaf files
 - [x] Add and show metadata information
+- [ ] Fix bug that prevents English dictionary from loading
