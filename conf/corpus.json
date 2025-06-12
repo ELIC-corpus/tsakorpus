@@ -15,7 +15,7 @@
   "default_values": {
     "sent_meta_speaker_type": "native"
   },
-  "default_view": "standard",
+  "default_view": "glossed",
   "detect_lemma_queries": false,
   "display_freq_rank": true,
   "fulltext_page_size": 100,
