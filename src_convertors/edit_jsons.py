@@ -26,22 +26,32 @@ def patch_json_folder(json_folder, meta_dict):
                 with open(json_path, 'r', encoding='utf-8') as f:
                     data = json.load(f)
 
-                # Extract basename without extension for matching
                 base_filename = normalize(os.path.splitext(filename)[0])
 
                 if base_filename in meta_dict:
-                    data['meta'] = meta_dict[base_filename]
-                    print(f"Updated metadata for {filename}")
-                else:
-                    print(f"WARNING: No metadata found for {filename}")
+                    metadata = meta_dict[base_filename]
 
-                # Overwrite JSON file
+                    # Top-level metadata for legacy tools
+                    data['meta'] = metadata
+
+                    # Sentence-level metadata for Tsakorpus search/filtering
+                    for sentence in data.get("sentences", []):
+                        sent_meta = sentence.get("meta", {})
+                        for k, v in metadata.items():
+                            if k not in sent_meta:
+                                sent_meta[k] = v
+                        sentence["meta"] = sent_meta
+
+                    print(f"✅ Updated top-level and sentence-level metadata for {filename}")
+                else:
+                    print(f"⚠️  No metadata found for {filename}")
+
                 with open(json_path, 'w', encoding='utf-8') as f:
                     json.dump(data, f, ensure_ascii=False, indent=4)
 
 if __name__ == "__main__":
-    meta_csv_path = 'corpus/meta.csv'  # adjust if needed
-    json_folder = 'corpus/json'        # adjust if needed
+    meta_csv_path = 'corpus/meta.csv'
+    json_folder = 'corpus/json'
 
     meta_dict = load_metadata(meta_csv_path)
     patch_json_folder(json_folder, meta_dict)

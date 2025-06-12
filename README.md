@@ -14,4 +14,4 @@ A guide for setting up tsakorpus from scratch on the UGA corpus server is availa
 - [x] Show tiers for each word in search results when searching sentences
 - [ ] Fix tiers to show correct information
 - [ ] Fix audio clipping issue with new .eaf files
-- [ ] Add and show metadata information
+- [x] Add and show metadata information
