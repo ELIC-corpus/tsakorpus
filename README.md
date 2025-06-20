@@ -13,7 +13,8 @@ A guide for setting up tsakorpus from scratch on the UGA corpus server is availa
 
 ## To-do
 - [x] Show tiers for each word in search results when searching sentences
-- [ ] Fix tiers to show correct information
+- [x] Fix tiers to show correct information
+- [ ] Adjust tier formatting to show blank cells and header column on the left
 - [ ] Fix audio clipping issue with new .eaf files
 - [x] Add and show metadata information
 - [ ] Fix bug that prevents English dictionary from loading
