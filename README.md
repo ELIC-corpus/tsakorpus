@@ -18,3 +18,5 @@ A guide for setting up tsakorpus from scratch on the UGA corpus server is availa
 - [x] Fix audio clipping issue with new .eaf files
 - [x] Add and show metadata information
 - [ ] Fix bug that prevents English dictionary from loading
+- [ ] Deploy on AWS
+- [ ] Add password protection
