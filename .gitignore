@@ -2,9 +2,9 @@
 **.idea/**
 txt2json/corpus/json/**
 txt2json/corpus/txt/**
-corpus/**
+# corpus/** # need to add empty directories for S3 to populate in AWS
 src_convertors/corpus/**
-search/media/**
+# search/media/** # need to add empty directories for S3 to populate in AWS
 search/tmp/**
 search/img/**
 search/corpus_html/**
@@ -56,3 +56,7 @@ messages.pot
 query_log.txt
 *.sqlite
 *.sqlite-journal
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
