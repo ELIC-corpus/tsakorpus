@@ -2,9 +2,7 @@
 **.idea/**
 txt2json/corpus/json/**
 txt2json/corpus/txt/**
-# corpus/** # need to add empty directories for S3 to populate in AWS
 src_convertors/corpus/**
-# search/media/** # need to add empty directories for S3 to populate in AWS
 search/tmp/**
 search/img/**
 search/corpus_html/**
