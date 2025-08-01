@@ -1,5 +1,5 @@
 {
-  "elastic_url": "arn:aws:es:us-east-1:391771576492:domain/tsakorpus",
+  "elastic_url": "https://vpc-tsakorpus-jz4eotofkti72cv3sgtsdc3gna.us-east-1.es.amazonaws.com",
   "meta_fields": ["filename", "speaker", "variety", "location", "sex", "year", "comment"],
   "meta_fields_visible": ["filename", "speaker", "variety", "location", "sex", "year", "comment"],
   "accidental_word_fields": [],
