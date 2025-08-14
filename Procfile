@@ -1,1 +1,1 @@
-web: bash start.sh
+web: python -m gunicorn --chdir search tsakorpus.wsgi:application --bind 0.0.0.0:$PORT --workers 2
