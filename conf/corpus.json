@@ -1,5 +1,8 @@
 {
-    "elastic_url": "https://elastic:9h8a0rbgt7vrzdmoj5czjuu5qn10ystf@elasticsearch-production-399c.up.railway.app:443",
+<<<<<<< HEAD
+=======
+  "elastic_url": "https://vpc-tsakorpus-jz4eotofkti72cv3sgtsdc3gna.us-east-1.es.amazonaws.com",
+>>>>>>> d45016a397cb891f04ab23358bc6a1fbf2428bdc
   "meta_fields": ["filename", "speaker", "variety", "location", "sex", "year", "comment"],
   "meta_fields_visible": ["filename", "speaker", "variety", "location", "sex", "year", "comment"],
   "accidental_word_fields": [],

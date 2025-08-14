@@ -2,9 +2,7 @@
 **.idea/**
 txt2json/corpus/json/**
 txt2json/corpus/txt/**
-corpus/**
 src_convertors/corpus/**
-search/media/**
 search/tmp/**
 search/img/**
 search/corpus_html/**
@@ -56,3 +54,7 @@ messages.pot
 query_log.txt
 *.sqlite
 *.sqlite-journal
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
