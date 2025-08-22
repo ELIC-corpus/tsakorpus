@@ -3,7 +3,10 @@ Contains Flask view functions associated with certain URLs.
 """
 
 
-from flask import request, render_template, jsonify, send_from_directory
+# from flask import request, render_template, jsonify, send_from_directory
+from flask import request, render_template, jsonify, send_from_directory, redirect, url_for, session, flash
+from email_validator import validate_email, EmailNotValidError
+from .db import init_db, add_user, get_user
 import json
 import copy
 import re
@@ -838,3 +841,82 @@ def setup_corpus_save_changes():
     settings.save_settings(os.path.abspath('../USER_CONFIG/corpus.json'), data=data)
     settings.prepare_translations(os.path.abspath('../USER_CONFIG/translations'), data=data)
     return jsonify(result='OK')
+
+# ----------------------
+# LOGIN / SIGNUP ROUTES
+# ----------------------
+
+# Simple in-memory user storage (replace with DB later)
+users = {}
+
+
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        institution = request.form.get("institution")
+        department = request.form.get("department")
+        designation = request.form.get("designation")
+
+        print("Email:", email)  # Debugging
+        print("Password:", request.form.get("password"))  # Debugging   
+
+        # Step 1: Validate email
+        try:
+            valid = validate_email(email)  
+            email = valid.email  # <-- normalized (lowercased, stripped, etc.)
+        except EmailNotValidError as e:
+            # flash(str(e), "danger")
+            flash("Invalid email. Please signup with a valid email!", "error")
+            return redirect(url_for("signup"))
+
+        # Step 2: Check mandatory fields
+        if not email or not password:
+            flash("Email and password are required!", "warning")
+            return redirect(url_for("signup"))
+
+        # Step 3: Check if user already exists
+        if get_user(email):
+            flash("User already exists. Please log in.", "warning")
+            return redirect(url_for("login"))
+
+        # Step 4: Add new user
+        add_user(email, password, institution, department, designation)
+        flash("Signup successful! Please login.", "success")
+        return redirect(url_for("login"))  # redirect to login, not search_page
+
+    return render_template("signup.html")
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    # session.pop('_flashes', None)
+    if request.method == "POST":
+        email = request.form["email"].strip()
+        password = request.form["password"].strip()
+
+        user = get_user(email)   # <-- using db.py
+
+        if not user:
+            flash("User not registered. Please sign up first.", "error")
+            return redirect(url_for("login"))
+
+        print(password)
+        print(user["password"])
+        if password == user["password"]:   # later replace with hash check
+            session["user"] = user["email"]
+            # flash("Login successful!", "success")
+            return redirect(url_for("search_page"))
+        else:
+            flash("Incorrect password. Try again.", "error")
+            return redirect(url_for("login"))
+
+    return render_template("login.html")
+
+
+@app.route("/logout")
+def logout():
+    session.pop("user", None)   # clear the session
+    flash("You have been logged out.", "info")
+    return redirect(url_for("login"))
