@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ locale }}">
 <head>
 	<title>{{ _('corpus_title') }} - {{ _('Corpus search page') }}</title>
@@ -71,6 +71,21 @@
 		<div class="row_section_fixed">
 			{% include "index/corpus_header.html" %} <!-- tsakorpus header: corpus name, interface langauges, help link -->
 		</div>
+
+		{% if session.get("user") %}
+		<div class="row_section_fixed">
+			<div class="d-flex justify-content-end align-items-center p-2">
+				<span class="me-3">Logged in as <b>{{ session['user'] }}</b></span>
+				<a href="{{ url_for('logout') }}" 
+				class="btn btn-sm btn-danger">
+				Logout
+				</a>
+			</div>
+		</div>
+		{% endif %}
+
+
+
 {% if ready_for_work %}
 		<div class="row_section_fixed">
 			{% include "index/query_area.html" %} <!-- query area: boxes for word search, settings, search buttons -->
