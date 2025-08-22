@@ -165,3 +165,7 @@ if settings.session_cookie_domain is not None and len(settings.session_cookie_do
     app.config['SESSION_COOKIE_DOMAIN'] = settings.session_cookie_domain
 
 from .views import *
+
+from .db import init_db
+init_db()
+
