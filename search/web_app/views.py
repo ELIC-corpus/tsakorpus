@@ -5,6 +5,7 @@ Contains Flask view functions associated with certain URLs.
 
 # from flask import request, render_template, jsonify, send_from_directory
 from flask import request, render_template, jsonify, send_from_directory, redirect, url_for, session, flash
+from functools import wraps
 from email_validator import validate_email, EmailNotValidError
 from .db import init_db, add_user, get_user
 import json
@@ -23,6 +24,16 @@ from .auxiliary_functions import jsonp, gzipped, nocache, lang_sorting_key, copy
 from .search_pipelines import *
 
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "user" not in session:
+            flash("Please log in to continue.", "danger")
+            return redirect(url_for("login"))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static/favicons'),
@@ -31,6 +42,7 @@ def favicon():
 
 @app.route('/search')
 @app.route('/search_minimalistic')
+@login_required
 def search_page():
     """
     Return HTML of the search page (the main page of the corpus).
