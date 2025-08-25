@@ -166,6 +166,10 @@ if settings.session_cookie_domain is not None and len(settings.session_cookie_do
 
 from .views import *
 
-from .db import init_db
-init_db()
+from .db import init_db, DB_PATH
+
+if not os.path.exists(DB_PATH):
+    init_db()
+
+
 
