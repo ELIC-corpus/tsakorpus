@@ -79,5 +79,5 @@ ut-main	u̠t-Ma'in
 wan	Wan
 yakut	Yakut
 yiddish	Yiddish
-langname_chakavian Chakavian
-chakavian	   Chakavian
+langname_chakavian Čakavian
+chakavian	   Čakavian
