@@ -37,11 +37,11 @@
   ],
   "keep_lemma_order": false,
   "keyboards": {
-    "chakavian": "chakavian",
+    "čakavian": "čakavian",
     "english": "english"
   },
   "lang_props": {
-    "chakavian": {
+    "čakavian": {
       "dictionary_categories": [
         "nType",
         "adjType",
@@ -1771,7 +1771,7 @@
     }
   },
   "languages": [
-    "chakavian",
+    "čakavian",
     "english"
   ],
   "lemma_table_fields": [],
