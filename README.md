@@ -1,7 +1,7 @@
 # tsakorpus
 An implementation of the Tsakorpus platform for ELIC
 
-## Setup
+## Setup: running locally
 A guide for setting up tsakorpus from scratch on the UGA corpus server is available in `tsakorpus_setup.ipynb`. Alternatively, to run and view tsakorpus locally, you can
 
 0. Setup a virtual environment and install all necessary packages
@@ -11,12 +11,21 @@ A guide for setting up tsakorpus from scratch on the UGA corpus server is availa
 3. Start the corpus interface with `python tsakorpus.wsgi` within the `search` directory
 4. Go to http://127.0.0.1:7342/search
 
+## Setup: updating Railway deployment
+
 ## To-do
 - [x] Show tiers for each word in search results when searching sentences
 - [x] Fix tiers to show correct information
-- [ ] Adjust tier formatting to show blank cells and header column on the left
 - [x] Fix audio clipping issue with new .eaf files
 - [x] Add and show metadata information
 - [ ] Fix bug that prevents English dictionary from loading
-- [ ] Deploy on AWS
-- [ ] Add password protection
+- [x] Deploy on ~~AWS~~ Railway
+- [x] Add password protection
+---
+# Railway deployment bugs
+- [x] Correct spelling of Čakavian
+- [ ] Fix .csv & .xlsx file download issues
+- [ ] Fix "expand context" button
+- [ ] Add all other languages
+- [ ] Fix virtual keyboard
+- [ ] Check copying to clipboard
