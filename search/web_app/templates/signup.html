@@ -14,28 +14,24 @@
       margin: 0;
     }
 
-    .welcome-text {
-      text-align: center;
-      font-size: 2.5rem; /* bigger font size */
-      font-weight: bold;
-      margin-bottom: 20px;
-      color: white; /* make it stand out */
+    .welcome-text{
+      text-align:center; font-size:2.5rem; font-weight:bold; margin:20px 0; color:#fff;
     }
 
-    .signup-container {
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-      width: 350px;
-      text-align: center;
+    .signup-container{
+      background:#fff; padding:30px; border-radius:10px;
+      box-shadow:0 4px 12px rgba(0,0,0,.2);
+      width:500px; max-width:90%; text-align:left; margin-bottom:24px;
     }
 
-    .signup-container h2 {
-      margin-bottom: 20px;
-      font-size: 1.5rem;
+    /* 1 & 2: smaller, centered “Create an Account” */
+    .signup-container h2{
+      font-size:1.6rem;           /* smaller than welcome */
+      text-align:center;           /* centered inside card */
+      margin:0 0 20px 0;
     }
 
+    
     input {
       width: 100%;
       padding: 10px;
@@ -70,6 +66,26 @@
       border: 1px solid #cc6600;
     }
 
+    .optional {
+      display: block;        
+      font-size: 0.8rem;     
+      font-weight: normal;   
+      color: #666;           
+    }
+
+    .form-row{ display:flex; align-items:center; gap:12px; margin:12px 0; }
+    .form-row label{ flex:1; font-size:.95rem; }
+    .form-row input{ flex:2; }
+
+    .terms-row{ display:flex; align-items:center; justify-content:center; gap:8px; margin:10px 0 16px; }
+    .terms-row input{ width:auto; }
+
+    .terms-text{ font-size:.85rem; line-height:1.35; color:#444; }
+
+    .footer-link{ text-align:center; margin-top:14px; }
+
+    .req { color:#d00; margin-left:4px; font-weight:700; }
+
 
     button {
       background: #0072ff;
@@ -92,7 +108,7 @@
   </style>
 </head>
 <body>
-  <div class="welcome-text">Welcome to Tsakorpus</div>
+  <div class="welcome-text">Welcome to the ELIC Corpus</div>
 
   <div class="container">
   {% with messages = get_flashed_messages(with_categories=true) %}
@@ -107,25 +123,55 @@
   <div class="signup-container">
     <h2>Create an Account</h2>
     <form method="post" action="{{ url_for('signup') }}">
-      <label>Email / User ID</label>
-      <input type="email" name="email" required>
+      <div class="form-row">
+        <label>Email / User ID <span class="req">*</span></label>
+        <input type="email" name="email" required>
+      </div>
 
-      <label>Password</label>
-      <input type="password" name="password" required>
+      <div class="form-row">
+        <label>Password <span class="req">*</span></label>
+        <input type="password" name="password" required>
+      </div>
 
-      <label>Institution Name</label>
-      <input type="text" name="institution" required>
+      <div class="form-row">
+        <label>
+          Academic Institution
+          <span class="optional">(if applicable)</span>
+        </label>
+        <input type="text" name="institution">
+      </div>
 
-      <label>Department Name</label>
-      <input type="text" name="department" required>
+      <div class="form-row">
+        <label>
+          Department Name
+          <span class="optional">(if applicable)</span>
+        </label>
+        <input type="text" name="department">
+      </div>
 
-      <label>Designation</label>
-      <input type="text" name="designation" required>
+      <p class="terms-text">
+        Data from the ELIC Corpus may be used only for non-commercial purposes and
+        the corpus must be cited appropriately. See 
+        <a href="https://elic-corpus.uga.edu/corpus" target="_blank" rel="noopener noreferrer">
+          Endangered Languages in Contact in Istria and Varner, Croatia (ELIC)
+        </a> for more information. 
+        The search platform is 
+        <a href="https://github.com/timarkh/tsakorpus?tab=MIT-1-ov-file" target="_blank" rel="noopener noreferrer">
+          Tsakorpus
+        </a>, copyright (c) 2017–2025 Timofey Arkhangelskiy 
+        <a href="mailto:timarkh@gmail.com">timarkh@gmail.com</a>.
+      </p>
+
+
+      <div class="terms-row">
+        <input type="checkbox" name="terms" required>
+        <label for="terms" style="margin:0;">I agree to the terms of use.</label>
+      </div>
 
       <button type="submit">Sign Up</button>
-    </form>
 
-    <p>Already registered? <a href="{{ url_for('login') }}">Login</a></p>
+      <p class="footer-link">Already registered? <a href="{{ url_for('login') }}">Login</a></p>
+    </form>
   </div>
 </body>
 </html>
