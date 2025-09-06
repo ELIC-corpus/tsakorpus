@@ -12,7 +12,7 @@ A guide for setting up tsakorpus from scratch on the UGA corpus server is availa
 4. Go to http://127.0.0.1:7342/search
 
 ## Setup: updating Railway deployment
-
+---
 ## To-do
 - [x] Show tiers for each word in search results when searching sentences
 - [x] Fix tiers to show correct information
@@ -21,8 +21,8 @@ A guide for setting up tsakorpus from scratch on the UGA corpus server is availa
 - [ ] Fix bug that prevents English dictionary from loading
 - [x] Deploy on ~~AWS~~ Railway
 - [x] Add password protection
----
-# Railway deployment bugs
+
+### Railway deployment bugs
 - [x] Correct spelling of Čakavian
 - [ ] Fix .csv & .xlsx file download issues
 - [ ] Fix "expand context" button
