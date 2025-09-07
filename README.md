@@ -12,6 +12,21 @@ A guide for setting up tsakorpus from scratch on the UGA corpus server is availa
 4. Go to http://127.0.0.1:7342/search
 
 ## Setup: updating Railway deployment
+These steps index the corpus to the Elasticsearch instance in Railway and download all media files to the deployed directory that Railway is reading from to run the website. 
+
+1. Run `fix_media_files.py`
+2. Run `eaf2json.py`
+3. Run `edit_jsons.py` to add metadata information
+4. Run indexator (with updated "elastic_url" in `conf/corpus.json` pointed at Railway Elasticsearch)
+5. Download media files to local computer and upload to onedrive, get download url and change end of url from `...dl=0` to `...dl=1'
+6. Install Railway CLI, link account and ssh into Tsakorpus project
+7. Download media files into Railway volume with:
+```
+curl -fSL 'https://www.dropbox.com/media/files/location/...dl=1' -o /tmp/media.tgz
+mkdir -p /search/media
+tar -xzf /tmp/media.tgz -C /search/media --strip-components=2
+```
+
 ---
 ## To-do
 - [x] Show tiers for each word in search results when searching sentences
