@@ -1,1 +1,1 @@
-web: bash -lc 'ln -sfn /search/media /app/search/media && exec python -m gunicorn --chdir search wsgi:application --bind 0.0.0.0:$PORT --workers 2'
+web: python -m gunicorn --chdir search wsgi:application --bind 0.0.0.0:$PORT --workers 2
