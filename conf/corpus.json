@@ -1772,7 +1772,9 @@
   },
   "languages": [
     "chakavian",
-    "english"
+      "english",
+      "istro-venetian",
+      "croatian"
   ],
   "lemma_table_fields": [],
   "line_plot_meta": [
