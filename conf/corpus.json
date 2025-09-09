@@ -1,7 +1,7 @@
 {
   "elastic_url": "https://elastic:9h8a0rbgt7vrzdmoj5czjuu5qn10ystf@elasticsearch-production-399c.up.railway.app:443",
-  "meta_fields": ["filename", "speaker", "variety", "location", "sex", "year", "comment"],
-  "meta_fields_visible": ["filename", "speaker", "variety", "location", "sex", "year", "comment"],
+    "meta_fields": ["filename", "speaker", "variety", "location", "sex", "year", "born", "comment"],
+    "meta_fields_visible": ["filename", "speaker", "variety", "location", "sex", "year", "born", "comment"],
   "accidental_word_fields": [],
   "all_language_search_enabled": false,
   "ambiguous_analyses": true,
