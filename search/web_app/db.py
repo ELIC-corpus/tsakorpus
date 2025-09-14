@@ -1,47 +1,54 @@
+# app/db.py
 import os
-import sqlite3
+import psycopg2
+import psycopg2.extras
+import psycopg2.errors
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "users.db")
+DATABASE_URL = os.getenv("DATABASE_URL")
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
+def get_conn():
+    if not DATABASE_URL:
+        raise RuntimeError("DATABASE_URL not set")
+    return psycopg2.connect(
+        DATABASE_URL,
+        cursor_factory=psycopg2.extras.RealDictCursor,
+        # Uncomment if provider requires SSL:
+        # sslmode="require",
+    )
 
 def init_db():
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute("""
-    CREATE TABLE IF NOT EXISTS users (
-        email TEXT PRIMARY KEY,
-        password TEXT,
-        institution TEXT,
-        department TEXT,
-        designation TEXT
-    )
-    """)
-    conn.commit()
-    conn.close()
-
-def add_user(email, password, institution, department, designation):
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    try:
-        c.execute("""
-        INSERT INTO users (email, password, institution, department, designation)
-        VALUES (?, ?, ?, ?, ?)
-        """, (email, password, institution, department, designation))
+    with get_conn() as conn, conn.cursor() as cur:
+        cur.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            email TEXT PRIMARY KEY,
+            password TEXT NOT NULL,
+            institution TEXT,
+            department TEXT
+        )
+        """)
         conn.commit()
-    except sqlite3.IntegrityError:
-        # email already exists
-        conn.close()
-        return False
-    conn.close()
-    return True
+
+def add_user(email, password, institution, department):
+    with get_conn() as conn, conn.cursor() as cur:
+        try:
+            cur.execute("""
+                INSERT INTO users (email, password, institution, department)
+                VALUES (%s, %s, %s, %s)
+            """, (email, password, institution, department))
+            conn.commit()
+            return True
+        except psycopg2.errors.UniqueViolation:
+            conn.rollback()
+            return False
 
 def get_user(email):
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row   # <-- makes rows behave like dicts
-    c = conn.cursor()
-    c.execute("""
-        SELECT email, password, institution, department, designation
-        FROM users WHERE email = ?
-    """, (email,))
-    row = c.fetchone()
-    conn.close()
-    return dict(row) if row else None
+    with get_conn() as conn, conn.cursor() as cur:
+        cur.execute("""
+            SELECT email, password, institution, department
+            FROM users
+            WHERE email = %s
+        """, (email,))
+        row = cur.fetchone()
+        return dict(row) if row else None
