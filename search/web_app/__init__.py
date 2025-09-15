@@ -169,10 +169,12 @@ from .views import *
 #from .db import init_db, DB_PATH
 from .db import init_db
 
-#if not os.path.exists(DB_PATH):
-#    init_db()
+try:
+    init_db()
+except Exception:
+    app.logger.exception("DB init failed")
 
-init_db()
+
 
 
 
