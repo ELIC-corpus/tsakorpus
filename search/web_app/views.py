@@ -22,6 +22,7 @@ from .session_management import get_locale, get_session_data, change_display_opt
 from .auxiliary_functions import jsonp, gzipped, nocache, lang_sorting_key, copy_request_args,\
     distance_constraints_too_complex, remove_sensitive_data, log_query
 from .search_pipelines import *
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 def login_required(f):
@@ -858,33 +859,24 @@ def setup_corpus_save_changes():
 # LOGIN / SIGNUP ROUTES
 # ----------------------
 
-# Simple in-memory user storage (replace with DB later)
-users = {}
-
-
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
-        email = request.form.get("email")
-        password = request.form.get("password")
-        institution = request.form.get("institution")
-        department = request.form.get("department")
-        designation = request.form.get("designation")
-
-        print("Email:", email)  # Debugging
-        print("Password:", request.form.get("password"))  # Debugging   
+        email = (request.form.get("email") or "").strip()
+        raw_password = (request.form.get("password") or "").strip()
+        institution = (request.form.get("institution") or "").strip() or None
+        department  = (request.form.get("department")  or "").strip() or None
 
         # Step 1: Validate email
         try:
-            valid = validate_email(email)  
-            email = valid.email  # <-- normalized (lowercased, stripped, etc.)
-        except EmailNotValidError as e:
-            # flash(str(e), "danger")
+            valid = validate_email(email)
+            email = valid.email  # normalized
+        except EmailNotValidError:
             flash("Invalid email. Please signup with a valid email!", "error")
             return redirect(url_for("signup"))
 
         # Step 2: Check mandatory fields
-        if not email or not password:
+        if not email or not raw_password:
             flash("Email and password are required!", "warning")
             return redirect(url_for("signup"))
 
@@ -893,32 +885,33 @@ def signup():
             flash("User already exists. Please log in.", "warning")
             return redirect(url_for("login"))
 
-        # Step 4: Add new user
-        add_user(email, password, institution, department, designation)
+        # Step 4: Hash + store in Postgres
+        pwd_hash = generate_password_hash(raw_password)
+        ok = add_user(email, pwd_hash, institution, department)
+        if not ok:
+            flash("User already exists. Please log in.", "warning")
+            return redirect(url_for("login"))
+
         flash("Signup successful! Please login.", "success")
-        return redirect(url_for("login"))  # redirect to login, not search_page
+        return redirect(url_for("login"))
 
     return render_template("signup.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    # session.pop('_flashes', None)
     if request.method == "POST":
-        email = request.form["email"].strip()
-        password = request.form["password"].strip()
+        email = (request.form.get("email") or "").strip()
+        raw_password = (request.form.get("password") or "").strip()
 
-        user = get_user(email)   # <-- using db.py
-
+        user = get_user(email)   # <-- reads from Postgres
         if not user:
             flash("User not registered. Please sign up first.", "error")
             return redirect(url_for("login"))
 
-        print(password)
-        print(user["password"])
-        if password == user["password"]:   # later replace with hash check
+        # Compare hash
+        if check_password_hash(user["password"], raw_password):
             session["user"] = user["email"]
-            # flash("Login successful!", "success")
             return redirect(url_for("search_page"))
         else:
             flash("Incorrect password. Try again.", "error")
@@ -929,6 +922,6 @@ def login():
 
 @app.route("/logout")
 def logout():
-    session.pop("user", None)   # clear the session
+    session.pop("user", None)
     flash("You have been logged out.", "info")
     return redirect(url_for("login"))
