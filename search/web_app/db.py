@@ -42,7 +42,7 @@ def init_db():
 #             conn.rollback()
 #             return False
 
-def add_user(email, password, institution, department, *rest):
+def add_user_v2(email, password, institution, department, *rest):
     with get_conn() as conn, conn.cursor() as cur:
         try:
             cur.execute("""
