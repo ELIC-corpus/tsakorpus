@@ -14,8 +14,7 @@ def get_conn():
     return psycopg2.connect(
         DATABASE_URL,
         cursor_factory=psycopg2.extras.RealDictCursor,
-        # Uncomment if provider requires SSL:
-        # sslmode="require",
+        sslmode="require",
     )
 
 def init_db():
@@ -30,7 +29,20 @@ def init_db():
         """)
         conn.commit()
 
-def add_user(email, password, institution, department):
+# def add_user(email, password, institution, department):
+#     with get_conn() as conn, conn.cursor() as cur:
+#         try:
+#             cur.execute("""
+#                 INSERT INTO users (email, password, institution, department)
+#                 VALUES (%s, %s, %s, %s)
+#             """, (email, password, institution, department))
+#             conn.commit()
+#             return True
+#         except psycopg2.errors.UniqueViolation:
+#             conn.rollback()
+#             return False
+
+def add_user(email, password, institution, department, *rest):
     with get_conn() as conn, conn.cursor() as cur:
         try:
             cur.execute("""
