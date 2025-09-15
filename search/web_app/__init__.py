@@ -169,8 +169,10 @@ from .views import *
 #from .db import init_db, DB_PATH
 from .db import init_db
 
-if not os.path.exists(DB_PATH):
-    init_db()
+#if not os.path.exists(DB_PATH):
+#    init_db()
+
+init_db()
 
 
 
