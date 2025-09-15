@@ -79,9 +79,9 @@ ut-main	u̠t-Ma'in
 wan	Wan
 yakut	Yakut
 yiddish	Yiddish
-langname_chakavian Čakavian
-chakavian	   Čakavian
-istro-venetian Istro-Venetian
-langname_istro-venetian Istro-Venetian
-croatian Croatian
-langname_croatian Croatian
+langname_chakavian	Čakavian
+chakavian	Čakavian
+istro-venetian	Istro-Venetian
+langname_istro-venetian	Istro-Venetian
+croatian	Croatian
+langname_croatian	Croatian
