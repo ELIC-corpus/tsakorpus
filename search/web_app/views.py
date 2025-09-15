@@ -887,6 +887,7 @@ def signup():
 
         # Step 4: Hash + store in Postgres
         pwd_hash = generate_password_hash(raw_password)
+        print(">>> DEBUG signup is running THIS version <<<")
         ok = add_user_v2(email, pwd_hash, institution, department)
         if not ok:
             flash("User already exists. Please log in.", "warning")
