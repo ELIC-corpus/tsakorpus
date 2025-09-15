@@ -7,7 +7,7 @@ Contains Flask view functions associated with certain URLs.
 from flask import request, render_template, jsonify, send_from_directory, redirect, url_for, session, flash
 from functools import wraps
 from email_validator import validate_email, EmailNotValidError
-from .db import init_db, add_user, get_user
+from .db import init_db, add_user_v2, get_user
 import json
 import copy
 import re
@@ -887,7 +887,7 @@ def signup():
 
         # Step 4: Hash + store in Postgres
         pwd_hash = generate_password_hash(raw_password)
-        ok = add_user(email, pwd_hash, institution, department)
+        ok = add_user_v2(email, pwd_hash, institution, department)
         if not ok:
             flash("User already exists. Please log in.", "warning")
             return redirect(url_for("login"))
