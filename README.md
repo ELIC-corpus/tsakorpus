@@ -41,6 +41,6 @@ tar -xzf /tmp/media.tgz -C /search/media --strip-components=2
 - [x] Correct spelling of Čakavian
 - [ ] Fix .csv & .xlsx file download issues
 - [ ] Fix "expand context" button
-- [ ] Add all other languages
+- [x] Add other languages
 - [ ] Fix virtual keyboard
 - [ ] Check copying to clipboard
