@@ -81,7 +81,7 @@ yakut	Yakut
 yiddish	Yiddish
 langname_chakavian Čakavian
 chakavian	   Čakavian
-langname_istro-venetian Istro-Venetian
-istro-venetian Istro-Venetian
-langname_croatian Croatian
-croatian Croatian
+langname_istro-venetian	Istro-Venetian
+istro-venetian		Istro-Venetian
+langname_croatian	Croatian
+croatian		Croatian
