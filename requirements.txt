@@ -9,3 +9,6 @@ XlsxWriter
 sqlitedict
 gunicorn
 email_validator
+psycopg2-binary
+python-dotenv
+
